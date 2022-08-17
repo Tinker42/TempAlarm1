@@ -2,6 +2,7 @@ package com.ata.tempalarm1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Database;
 import androidx.room.Room;
 
@@ -11,6 +12,9 @@ import com.ata.tempalarm1.Data.Alarm;
 import com.ata.tempalarm1.Data.ListDAO;
 import com.ata.tempalarm1.Data.MainDB;
 import com.ata.tempalarm1.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +31,32 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.initialiseDataBase(getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));//this 4.011230
+        //List<Alarm> emptyList = new ArrayList<Alarm>();
+        //binding.recyclerView.setAdapter(new MainAdapter( emptyList));
+
         setContentView(binding.getRoot());
+
+        //mainViewModel.updateListOfAlarms();
+        mainViewModel.getListOfAlarms().observe(this,alarms -> {//this or the onResume work
+            //update UI
+            //onChange(ListOfAlarms)
+            binding.recyclerView.setAdapter(new MainAdapter(alarms));
+        });
+
         //setContentView(R.layout.activity_main);
 
 
 
     }
+
+    /*@Override
+    protected void onResume(){//an option
+        super.onResume();
+
+        mainViewModel.getListOfAlarms().observe(this, alarms ->{
+            binding.recyclerView.setAdapter(new MainAdapter(alarms));
+        });
+    }*/
 }

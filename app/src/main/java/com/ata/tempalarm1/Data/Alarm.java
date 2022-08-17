@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey;
 @Entity
 public class Alarm {
     @ColumnInfo(name = "temperature")
-    public int temperature;
+    private int temperature;
     @ColumnInfo(name = "high_or_low")
-    public int HighOrLow;//0=(Red)Check if exceeds, 1=(Blue)Check if below
+    private int HighOrLow;//0=(Red)Check if exceeds, 1=(Blue)Check if below
     @PrimaryKey(autoGenerate = true)
     public int uID;
 
@@ -17,5 +17,17 @@ public class Alarm {
         this.temperature=temperature;
         this.HighOrLow=HighOrLow;
     }
+
+    public int getTemperature(){ return this.temperature;}
+    public int getHighOrLow(){ return this.HighOrLow;}
+    //public int getuID(){ return this.uID;}
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+    public void setHighOrLow(int highOrLow) {
+        this.HighOrLow = highOrLow;
+    }
+    //public void setuID(int uID) { this.uID = uID; }
 
 }
