@@ -2,6 +2,7 @@ package com.ata.tempalarm1;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -31,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.initialiseDataBase(getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        DividerItemDecoration drawBox = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        drawBox.setDrawable(getApplicationContext().getResources().getDrawable(R.drawable.box));
+        binding.recyclerView.addItemDecoration(drawBox);
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));//this 4.011230
         //List<Alarm> emptyList = new ArrayList<Alarm>();

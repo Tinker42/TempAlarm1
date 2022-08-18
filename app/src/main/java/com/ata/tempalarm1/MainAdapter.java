@@ -27,7 +27,13 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.getTextViewCount().setText( Integer.toString(position + 1) + ": " );
         holder.getTextView().setText( Integer.toString(DataSet.get(position).getTemperature()) + "℉" );
+        if (DataSet.get(position).getHighOrLow() == 0){
+            holder.getTextViewH0C1().setText( "Hotter" );
+        }else{
+            holder.getTextViewH0C1().setText( "Colder" );
+        }
     }
 
     @Override
@@ -35,13 +41,19 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private View view;
+        private TextView textViewCount;
         private TextView textView;
+        private TextView textViewH0C1;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view=itemView;
+            this.textViewCount = itemView.findViewById(R.id.Count);
             this.textView = itemView.findViewById(R.id.listTextView);
+            this.textViewH0C1 = itemView.findViewById(R.id.H0C1);
         }
+        public TextView getTextViewCount(){ return textViewCount;}
         public TextView getTextView(){ return textView;}
+        public TextView getTextViewH0C1(){ return textViewH0C1;}
     }
 }
 
