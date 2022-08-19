@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.room.Database;
 import androidx.room.Room;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import com.ata.tempalarm1.Data.Alarm;
 import com.ata.tempalarm1.Data.ListDAO;
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         //creating a new view model, based on the MainViewModel class, and storing it in the variable mainViewModel
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);//passing the class
-        mainViewModel.initialiseDataBase(getApplicationContext());
+        mainViewModel.initializeDataBase(getApplicationContext());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         DividerItemDecoration drawBox = new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
@@ -51,8 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
         //setContentView(R.layout.activity_main);
 
-
-
+        SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        binding.zipEditText.setText(Integer.toString(sharedPref.getInt("Zipcode",95928)));
+        binding.replaceZip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sharedPref.edit().putInt("Zipcode", Integer.parseInt(binding.zipEditText.getText().toString())).apply();
+            }
+        });
     }
 
     /*@Override

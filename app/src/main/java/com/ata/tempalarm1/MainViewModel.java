@@ -37,7 +37,7 @@ public class MainViewModel extends ViewModel {
         }
     }*/
 
-    boolean initialiseDataBase (Context context) {
+    boolean initializeDataBase (Context context) {
         try {
             //executor, Observable, Coroutine
             Database = Room.databaseBuilder(context, MainDB.class, "userAlarms")
