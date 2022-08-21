@@ -8,6 +8,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -60,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sharedPref.edit().putInt("Zipcode", Integer.parseInt(binding.zipEditText.getText().toString())).apply();
+            }
+        });
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getApplicationContext(), AlarmInputActivity.class);
+                startActivity(intent);
             }
         });
     }

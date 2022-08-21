@@ -8,13 +8,15 @@
 
     <TextView
         android:id="@+id/Count"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
 
         tools:text="#1:"
         android:textStyle="bold"
         android:textSize="28dp"
+
+        android:layout_marginLeft="8dp"
 
         />
 
@@ -28,13 +30,15 @@
 
     <TextView
         android:id="@+id/listTextView"
+
         android:layout_width="72dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="32dp"
 
         tools:text="46℉"
         android:textStyle="bold"
         android:textSize="28dp"
+
+        android:layout_marginRight="32dp"
 
         />
 
@@ -48,13 +52,15 @@
 
     <TextView
         android:id="@+id/H0C1"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
 
         tools:text="H|C"
         android:textStyle="bold"
         android:textSize="28dp"
+
+        android:layout_marginLeft="32dp"
 
         />
 
@@ -71,9 +77,12 @@
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="64dp"
 
         app:srcCompat="@android:drawable/ic_delete"
+
+
+        android:layout_marginRight="64dp"
+
         />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
