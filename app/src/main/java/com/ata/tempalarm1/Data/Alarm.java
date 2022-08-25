@@ -4,8 +4,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Alarm {
+public class Alarm implements Serializable {
     @ColumnInfo(name = "temperature")
     private int temperature;
     @ColumnInfo(name = "high_or_low")

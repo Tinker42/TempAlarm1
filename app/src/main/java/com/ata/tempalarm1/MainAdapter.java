@@ -39,11 +39,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public int getItemCount() { return DataSet.size(); }
 
+    public void addItem(Alarm alarm){ DataSet.add(alarm); notifyDataSetChanged(); }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         private View view;
         private TextView textViewCount;
         private TextView textView;
         private TextView textViewH0C1;
+        //delete button stuff
+        //private Alarm _____;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.view=itemView;
@@ -60,11 +64,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 class AlarmDiffCallback extends DiffUtil.ItemCallback<Alarm>{
     @Override
     public boolean areItemsTheSame(@NonNull Alarm oldItem, @NonNull Alarm newItem) {
-        return false;
+        return oldItem== newItem;
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull Alarm oldItem, @NonNull Alarm newItem) {
-        return false;
+        return oldItem.getTemperature()== newItem.getTemperature();
     }
 }
