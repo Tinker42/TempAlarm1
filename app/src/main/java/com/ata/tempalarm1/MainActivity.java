@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private MainViewModel mainViewModel;
     private MainAdapter mainAdapter;
+    static {System.loadLibrary("api-keys");}
+    public native String getAPIKey();
 
 
     @Override //Overriding the AppCompactActivity which is the android class that has a function onCreate that represents the view lifecycle
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-        Call<WeatherInfo> call=service.getWeatherAtZipcode("76c322c4b7mshc53f33b4e4b7f6fp1e1a4ejsn10e701dd2344",Integer.toString(sharedPref.getInt("Zipcode",95928)));
+        Call<WeatherInfo> call=service.getWeatherAtZipcode( getAPIKey() ,Integer.toString(sharedPref.getInt("Zipcode",95928)));
         call.enqueue(new Callback<WeatherInfo>() {
             @Override
             public void onResponse(Call<WeatherInfo> call, Response<WeatherInfo> response) {
