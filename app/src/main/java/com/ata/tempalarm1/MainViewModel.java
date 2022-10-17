@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.ata.tempalarm1.Data.Alarm;
 import com.ata.tempalarm1.Data.ListDAO;
@@ -16,19 +18,23 @@ import java.util.Observable;
 
 public class MainViewModel extends ViewModel {
     private MainDB Database;//class that controls all the database access objects
-    private MutableLiveData<List<Alarm>> ListOfAlarms;//holds the info that is being held in the LiveData
+    private LiveData<List<Alarm>> ListOfAlarms;//holds the info that is being held in the LiveData
+    private LiveData<List<WorkInfo>> ListOfWorkInfo = WorkManager.getInstance().getWorkInfosByTagLiveData("MainActivity");//holds the info
 
     public LiveData<List<Alarm>> getListOfAlarms() {
         ListDAO listDAO = Database.listDAO();
         //ListOfAlarms.postValue((List<Alarm>) listDAO.getAllAlarms());//1
-        LiveData< List<Alarm> > callVar = listDAO.getAllAlarms();//2
+        ListOfAlarms= listDAO.getAllAlarms();//2
         /*if(callVar != null) {
             ListOfAlarms.postValue(callVar);
         }*/
         //return ListOfAlarms;//1
-        return callVar;//2
+        return ListOfAlarms;//2
     }
 
+    public LiveData<List<WorkInfo>> getListOfWorkInfo() {
+        return ListOfWorkInfo;
+    }
     /*public void updateListOfAlarms(){
         ListDAO listDAO = DataBase.listDAO();
         List<Alarm> callVar = listDAO.getAllAlarms();
@@ -53,5 +59,24 @@ public class MainViewModel extends ViewModel {
         //listDAO.Insert(new Alarm(-4, 1));
         //listDAO.Insert(new Alarm(102, 0));
         return true;
+    }
+
+    String compare (double currTemp){
+        List<Alarm> currList = ListOfAlarms.getValue();
+
+        for(Alarm alarm:currList) {
+            if(alarm.getHighOrLow() == 0) {//is hotter?
+                if(alarm.getTemperature() <= currTemp) {
+                    //call alarm with: currTemp" has exceeded "alarm.getTemperature()
+                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";
+                }
+            }else{
+                if(alarm.getTemperature() >= currTemp) {//is colder?
+                    //call alarm with: currTemp" has fallen below "alarm.getTemperature()
+                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
+                }
+            }
+        }
+        return "";
     }
 }
