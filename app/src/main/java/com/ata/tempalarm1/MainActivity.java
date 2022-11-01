@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         /*//________________________________________________
 
         AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
-        Intent alarmRecieverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
-        alarmRecieverIntent.putExtra("alarmText","Here I Am");
+        Intent alarmReceiverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
+        alarmReceiverIntent.putExtra("alarmText","Here I Am");
 
-        PendingIntent alarmIntent= PendingIntent.getBroadcast(this,(int)System.currentTimeMillis(),alarmRecieverIntent,PendingIntent.FLAG_IMMUTABLE);//breaking here
+        PendingIntent alarmIntent= PendingIntent.getBroadcast(this,(int)System.currentTimeMillis(),alarmReceiverIntent,PendingIntent.FLAG_IMMUTABLE);//breaking here
 
         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),alarmIntent);
 
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
         //AlarmManager alarmManager2= (AlarmManager) getSystemService(ALARM_SERVICE);
         //if(alarmManager.canScheduleExactAlarms()){}
-        //PendingIntent alarmIntent2= PendingIntent.getBroadcast(getApplicationContext(),0,new Intent(getApplicationContext(),AlarmReciever.class),0);
+        //PendingIntent alarmIntent2= PendingIntent.getBroadcast(getApplicationContext(),0,new Intent(getApplicationContext(),AlarmReceiver.class),0);
         //alarmManager2.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),alarmIntent2);
 
 
@@ -142,7 +142,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(), AlarmInputActivity.class);
                 //startActivityForResult(intent,RESULT_OK);
-                startService(intent);
+                startActivity(intent);
+                //startService(intent);
             }
         });
         Constraints constraint = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();//set a constraint to be sure the device is connected to a network
@@ -174,13 +175,21 @@ public class MainActivity extends AppCompatActivity {
                         if(!alarmText.isEmpty()){
                             AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
                             //if(alarmManager.canScheduleExactAlarms()){}
-                            Intent alarmRecieverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
-                            alarmRecieverIntent.putExtra("alarmText",alarmText);
+                            Intent alarmReceiverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
+                            alarmReceiverIntent.putExtra("alarmText",alarmText);
                             //___________________________________________
 
                             //___________________________________________
                             Log.e("pre1", workInfo.getState().toString());
-                            PendingIntent alarmIntent= PendingIntent.getBroadcast(this,(int)System.currentTimeMillis(),alarmRecieverIntent,PendingIntent.FLAG_IMMUTABLE);//breaking here//fixed
+                            PendingIntent alarmIntent= PendingIntent.getBroadcast(this,
+                                    1
+                                    //(int)System.currentTimeMillis()
+                                    ,alarmReceiverIntent,
+                                    //PendingIntent.FLAG_IMMUTABLE|
+                                     PendingIntent.FLAG_UPDATE_CURRENT//missing mutability?
+                                    );//breaking here//fixed
+
+
                             Log.e("post1", workInfo.getState().toString());
 
                             Log.e("pre2", workInfo.getState().toString());

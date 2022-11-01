@@ -43,7 +43,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         //notification.priority|=Notification.PRIORITY_MAX;
 
         //mNotificationManager.createNotificationChannel
-        mNotificationManager.notify((int)System.currentTimeMillis(),notification);
+        mNotificationManager.notify(
+                1
+                //(int)System.currentTimeMillis()
+                ,notification);
 
 
     }
