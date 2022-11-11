@@ -1,5 +1,7 @@
 package com.ata.tempalarm1;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -16,6 +18,7 @@ import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -30,6 +33,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.ata.tempalarm1.Data.APIClient;
@@ -129,13 +133,37 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        binding.zipEditText.setText(Integer.toString(sharedPref.getInt("Zipcode",95928)));
-        binding.replaceZip.setOnClickListener(new View.OnClickListener() {
+        binding.zipText.setText(Integer.toString(sharedPref.getInt("Zipcode",95928)));
+        //code to update zipText on press of replaceZip
+        binding.settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sharedPref.edit().putInt("Zipcode", Integer.parseInt(binding.zipEditText.getText().toString())).apply();
+                Intent intent=new Intent(getApplicationContext(),SettingsActivity.class);
+                startActivity(intent);
+
             }
         });
+        ActivityResultLauncher<String[]> locationPermissionRequest =
+                registerForActivityResult(new ActivityResultContracts
+                                .RequestMultiplePermissions(), result -> {
+                            Boolean fineLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_FINE_LOCATION, false);
+                            Boolean coarseLocationGranted = result.getOrDefault(
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,false);
+                            if (fineLocationGranted != null && fineLocationGranted) {
+                                // Precise location access granted.
+                            } else if (coarseLocationGranted != null && coarseLocationGranted) {
+                                // Only approximate location access granted.
+                            } else {
+                                // No location access granted.
+                            }
+                        }
+                );
+        locationPermissionRequest.launch(new String[] {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        });
+
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                                     //(int)System.currentTimeMillis()
                                     ,alarmReceiverIntent,
                                     //PendingIntent.FLAG_IMMUTABLE|
-                                     PendingIntent.FLAG_UPDATE_CURRENT//missing mutability?
+                                     PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE//missing mutability?
                                     );//breaking here//fixed
 
 

@@ -22,7 +22,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 
         NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(context);
-        mBuilder.setSmallIcon(R.drawable.ic_launcher_background);
+        mBuilder.setSmallIcon(R.drawable.fa_notification_icon);
         //mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         mBuilder.setContentTitle("Notification");
         mBuilder.setContentText(intent.getStringExtra("alarmText"));

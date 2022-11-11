@@ -6,18 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/zipEditText"
+    <TextView
+        android:id="@+id/zipText"
 
         android:layout_width="132dp"
         android:layout_height="wrap_content"
 
         tools:text="95864"
-        android:hint="95864"
         android:textSize="32dp"
-        android:inputType="number"
         android:maxLength="5"
-        android:imeOptions="actionDone"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -28,17 +25,17 @@
         />
 
     <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/replaceZip"
+        android:id="@+id/settingsButton"
 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:layout_constraintStart_toEndOf="@id/zipEditText"
+        app:layout_constraintStart_toEndOf="@id/zipText"
         android:layout_marginLeft="32dp"
-        app:layout_constraintTop_toTopOf="@id/zipEditText"
-        app:layout_constraintBottom_toBottomOf="@id/zipEditText"
+        app:layout_constraintTop_toTopOf="@id/zipText"
+        app:layout_constraintBottom_toBottomOf="@id/zipText"
 
-        app:srcCompat="@android:drawable/ic_menu_edit"
+        app:srcCompat="@android:drawable/ic_menu_compass"
         tools:ignore="RtlHardcoded"
         />
 
@@ -65,7 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        app:layout_constraintTop_toBottomOf="@id/zipEditText"
+        app:layout_constraintTop_toBottomOf="@id/zipText"
         app:layout_constraintBottom_toBottomOf="parent"
 
 
