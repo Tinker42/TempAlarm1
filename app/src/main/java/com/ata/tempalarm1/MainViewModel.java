@@ -68,13 +68,15 @@ public class MainViewModel extends ViewModel {
             if(alarm.getHighOrLow() == 0) {//is hotter?
                 if(alarm.getTemperature() <= currTemp) {
                     //call alarm with: currTemp" has exceeded "alarm.getTemperature()
-                    alarm.setHighOrLow(1);
+                    //alarm.setHighOrLow(1);
+                    //swap those of HOL 0 below to 1
                     return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";
                 }
             }else{
                 if(alarm.getTemperature() >= currTemp) {//is colder?
                     //call alarm with: currTemp" has fallen below "alarm.getTemperature()
-                    alarm.setHighOrLow(0);
+                    //alarm.setHighOrLow(0);
+                    //swap those of HOL 1 above to 0
                     return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
                 }
             }
