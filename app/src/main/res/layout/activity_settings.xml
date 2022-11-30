@@ -96,5 +96,90 @@
         tools:ignore="SpUsage"
         />
 
+    <!--app:layout_constraintRight_toLeftOf="@id/Z2GS"-->
+    <!--<TimePicker
+        android:id="@+id/timePicker1"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+
+
+        app:layout_constraintTop_toBottomOf="@id/Z2GS"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />-->
+
+    <!--<EditText
+        android:id="@+id/editTextTime1"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:inputType="time"
+        android:maxLength=""
+
+        app:layout_constraintTop_toBottomOf="@id/Z2GS"
+        android:layout_marginTop="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:ems="10"
+        />-->
+    <TextView
+        android:id="@+id/textW"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerW"
+        app:layout_constraintEnd_toStartOf="@id/spinnerW"
+
+        app:layout_constraintTop_toTopOf="@id/spinnerW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Wake Time:"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+
+        tools:ignore="SpUsage"
+        />
+
+    <!--android:spinnerMode="dropdown or dialog"-->
+    <Spinner
+        android:id="@+id/spinnerW"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/textS"
+        app:layout_constraintTop_toBottomOf="@id/Z2GS" />
+
+    <TextView
+        android:id="@+id/textS"
+        app:layout_constraintBottom_toBottomOf="@id/spinnerS"
+        app:layout_constraintLeft_toRightOf="@id/spinnerW"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:layout_constraintTop_toTopOf="@id/spinnerS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="Sleep Time:"
+        android:textColor="@color/black"
+        android:textSize="14dp"
+
+        tools:ignore="SpUsage"
+        />
+
+    <Spinner
+        android:id="@+id/spinnerS"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toRightOf="@id/textS"
+
+        app:layout_constraintTop_toBottomOf="@id/Z2GS" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

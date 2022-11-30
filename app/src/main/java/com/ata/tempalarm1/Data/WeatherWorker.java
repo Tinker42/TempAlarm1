@@ -18,11 +18,20 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WeatherWorker extends Worker {
+
+    static int milToMS(int milit){
+        return (((milit-(milit%100))*36000)+((milit%100)*60000));
+    }
 
     static {
         System.loadLibrary("api-keys");
@@ -91,6 +100,7 @@ public class WeatherWorker extends Worker {
                             e.printStackTrace();
                         }*/
                         Log.e("LocationGot", Double.toString(location.getLatitude()) );
+
                         call[0] = service.getWeatherAtZipcode(getAPIKey(), Double.toString(location.getLatitude()) + "," + Double.toString(location.getLongitude()));
                         //getting stuck here^
                         /*try {
@@ -106,14 +116,41 @@ public class WeatherWorker extends Worker {
 
         }
         try{
-            /*
-            currTime= getTime()HH:MM:SS:MS;
-            if( currTime > AwakeTime && currTime < AsleepTime){
-                //runStuff
-            }else{
-                Thread.sleep((AwakeTime+24h)-currTime);
+
+
+            Log.e("CurrTime", "C: HHmm: "+ LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmm")) );
+            Log.e("CurrTime", "W: HHmm: "+ sharedPref.getInt("WakeTime",1000) );
+            Log.e("CurrTime", "S: HHmm: "+ sharedPref.getInt("SleepTime",2000) );
+
+            int currTime= Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
+            int wakeTime= sharedPref.getInt("WakeTime",1000);
+            int sleepTime= sharedPref.getInt("SleepTime",2000);
+            int waitTime=0;
+
+            if( currTime < wakeTime || currTime > sleepTime){
+
+                //Log.e("CurrTime", "Wms: "+ (milToMS(wakeTime)) );
+                //Log.e("CurrTime", "Cms: "+ (milToMS(currTime)) );
+
+                //Log.e("CurrTime", "Wms+24h: "+ ((milToMS(wakeTime))+86400000) );
+                //Log.e("CurrTime", "Cms%24h: "+ ((milToMS(currTime))%86400000) );
+
+                //Log.e("CurrTime", "Dif:    "+ ((((milToMS(wakeTime))+86400000)-((milToMS(currTime))%86400000))%86400000) );
+                //900 +2400 = 3300  2300%2400 =2300 3300-2300= 1000
+                //900 +2400 = 3300  100%2400 =100 3300-100= 32000%2400 = 800
+
+
+                waitTime= ((((milToMS(wakeTime)+86400000)-milToMS(currTime))%86400000)%86400000);
+                Log.e("CurrTime", "WT: "+ (waitTime) );
+                //Log.e("CurrTime", "WTmin: "+ ((waitTime/60000)%60) );
+                //Log.e("CurrTime", "WTh: "+ ((waitTime/60000-((waitTime/60000)%60))/.6) );
+                //Log.e("CurrTime", "M: HHmm: "+ (wakeTime) );
+                Log.e("CurrTime", "A: HHmm: "+ ( (waitTime/60000-((waitTime/60000)%60))/.6+(waitTime/60000)%60 ) );
+                Thread.sleep( waitTime );
             }
-            */
+
+            Log.e("CurrTime", "P" );
+
             try {
                 Thread.sleep(2048);
             } catch (InterruptedException e) {

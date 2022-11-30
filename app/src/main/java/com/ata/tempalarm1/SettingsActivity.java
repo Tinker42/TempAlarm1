@@ -5,7 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ata.tempalarm1.databinding.ActivityMainBinding;
 import com.ata.tempalarm1.databinding.ActivitySettingsBinding;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 ActivitySettingsBinding binding;
+    String[] times = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
     @Override //Overriding the AppCompactActivity which is the android class that has a function onCreate that represents the view lifecycle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +43,64 @@ ActivitySettingsBinding binding;
                 sharedPref.edit().putBoolean("UseGPS",b).apply();
             }
         });
+        Spinner spinW = (Spinner) findViewById(R.id.spinnerW);
+        Spinner spinS = (Spinner) findViewById(R.id.spinnerS);
+        ArrayAdapter<String> adapterW = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, times);
+        ArrayAdapter<String> adapterS = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, times);
+        adapterW.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterS.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinW.setAdapter(adapterW);
+        spinS.setAdapter(adapterS);
+        spinW.setOnItemSelectedListener(this);
+        spinS.setOnItemSelectedListener(this);
+
+        binding.spinnerW.setSelection(((sharedPref.getInt("WakeTime",1000))/100)-1);
+        binding.spinnerS.setSelection(((sharedPref.getInt("SleepTime",2000))/100)-1);
+
+        /*binding.spinnerW.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Selected Time: "+times[position] ,Toast.LENGTH_SHORT).show();
+                sharedPref.edit().putInt("WakeTime", (Integer.parseInt(times[position]))*100).apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        binding.spinnerS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "Selected Time: "+times[position] ,Toast.LENGTH_SHORT).show();
+                sharedPref.edit().putInt("SleepTime", (Integer.parseInt(times[position]))*100).apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });*/
+
     }
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position,long id) {
+        //Toast.makeText(getApplicationContext(), "Selected Time: "+times[position] ,Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
+        if (parent.getId() == R.id.spinnerW){
+            sharedPref.edit().putInt("WakeTime", (Integer.parseInt(times[position]))*100).apply();
+        }
+        if (parent.getId() == R.id.spinnerS){
+            sharedPref.edit().putInt("SleepTime", (Integer.parseInt(times[position]))*100).apply();
+        }
+        //sharedPref.edit().putInt("WakeTime", (Integer.parseInt(times[position]))*100).apply();
+        //sharedPref.edit().putInt("SleepTime", (Integer.parseInt(times[position]))*100).apply();
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
 
 
 }
