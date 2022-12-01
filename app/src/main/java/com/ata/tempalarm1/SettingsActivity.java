@@ -19,7 +19,7 @@ import com.ata.tempalarm1.databinding.ActivitySettingsBinding;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 ActivitySettingsBinding binding;
-    String[] times = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"};
+    String[] times = {"1am","2am","3am","4am","5am","6am","7am","8am","9am","10am","11am","12pm","1pm","2pm","3pm","4pm","5pm","6pm","7pm","8pm","9pm","10pm","11pm","12am"};
     @Override //Overriding the AppCompactActivity which is the android class that has a function onCreate that represents the view lifecycle
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,10 +89,10 @@ ActivitySettingsBinding binding;
         SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
         if (parent.getId() == R.id.spinnerW){
-            sharedPref.edit().putInt("WakeTime", (Integer.parseInt(times[position]))*100).apply();
+            sharedPref.edit().putInt("WakeTime", (position+1)*100).apply();
         }
         if (parent.getId() == R.id.spinnerS){
-            sharedPref.edit().putInt("SleepTime", (Integer.parseInt(times[position]))*100).apply();
+            sharedPref.edit().putInt("SleepTime", (position+1)*100).apply();
         }
         //sharedPref.edit().putInt("WakeTime", (Integer.parseInt(times[position]))*100).apply();
         //sharedPref.edit().putInt("SleepTime", (Integer.parseInt(times[position]))*100).apply();
