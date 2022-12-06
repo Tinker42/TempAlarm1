@@ -80,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(binding.getRoot());
 
+//
+//        import androidx.core.app.ActivityCompat;
+//        import android.content.pm.PackageManager;
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{
+//                        Manifest.permission.ACCESS_COARSE_LOCATION,
+//                        Manifest.permission.ACCESS_FINE_LOCATION,
+//                        Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+//                PackageManager.PERMISSION_GRANTED);
+
         /*//________________________________________________
 
         AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
@@ -160,8 +170,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                 );
         locationPermissionRequest.launch(new String[] {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
+                //,Manifest.permission.ACCESS_COARSE_LOCATION
+                //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
         });
 
 
@@ -198,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                         mWorkManager.getWorkInfosByTagLiveData("MainActivity").removeObservers(MainActivity.this);
                         /*NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(this);*/
 
-                        String alarmText = mainViewModel.compare(weatherInfo.getCurrent().getTempF());//runs compare of list vs current and returns notification string
+                        String alarmText = mainViewModel.compare(weatherInfo.getCurrent().getTempF());//,weatherInfo.getCurrent().getLastUpdated());//runs compare of list vs current and returns notification string
 
                         if(!alarmText.isEmpty()){
                             AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service

@@ -61,7 +61,7 @@ public class MainViewModel extends ViewModel {
         return true;
     }
 
-    String compare (double currTemp){
+    String compare (double currTemp){//,String LastTime){
         List<Alarm> currList = ListOfAlarms.getValue();
 
         for(Alarm alarm:currList) {
@@ -70,7 +70,7 @@ public class MainViewModel extends ViewModel {
                     //call alarm with: currTemp" has exceeded "alarm.getTemperature()
                     //alarm.setHighOrLow(1);
                     //swap those of HOL 0 below to 1
-                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";
+                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";// "+LastTime;
                 }
             }else{
                 if(alarm.getTemperature() >= currTemp) {//is colder?

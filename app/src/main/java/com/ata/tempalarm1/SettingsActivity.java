@@ -1,5 +1,6 @@
 package com.ata.tempalarm1;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -41,6 +42,13 @@ ActivitySettingsBinding binding;
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 sharedPref.edit().putBoolean("UseGPS",b).apply();
+                /*if(sharedPref.getBoolean("UseGPS",false)){
+                    locationPermissionRequest.launch(new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                            //,Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    });
+                }*/
             }
         });
         Spinner spinW = (Spinner) findViewById(R.id.spinnerW);

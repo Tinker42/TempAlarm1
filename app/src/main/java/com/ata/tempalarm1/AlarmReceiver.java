@@ -27,12 +27,12 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.setContentTitle("Notification");
         mBuilder.setContentText(intent.getStringExtra("alarmText"));
         mBuilder.setSound(alarmUri);
-        mBuilder.setPriority(NotificationCompat.PRIORITY_MAX);
+        mBuilder.setPriority(NotificationManager.IMPORTANCE_MAX);
         mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(intent.getStringExtra("alarmText")));
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationChannel channel= new NotificationChannel("default","default channel", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel= new NotificationChannel("default","default channel", NotificationManager.IMPORTANCE_HIGH);
             mNotificationManager.createNotificationChannel(channel);
             //mBuilder.setNotificationChannel
             mBuilder.setChannelId("default");

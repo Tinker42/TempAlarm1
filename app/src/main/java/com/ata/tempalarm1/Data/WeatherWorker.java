@@ -61,6 +61,7 @@ public class WeatherWorker extends Worker {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
+        Log.e("LocationGot", "UseGPS: "+sharedPref.getBoolean("UseGPS", false) );
         if (!sharedPref.getBoolean("UseGPS", false)) {
             /*try {
                 Thread.sleep(2);
@@ -99,9 +100,13 @@ public class WeatherWorker extends Worker {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }*/
-                        Log.e("LocationGot", Double.toString(location.getLatitude()) );
+                        Log.e("LocationGot", "Lat: "+Double.toString(location.getLatitude()) );
+                        Log.e("LocationGot", "Long: "+Double.toString(location.getLongitude()) );
+
 
                         call[0] = service.getWeatherAtZipcode(getAPIKey(), Double.toString(location.getLatitude()) + "," + Double.toString(location.getLongitude()));
+                        //call[0] = service.getWeatherAtZipcode(getAPIKey(), "37.759, -122.403");
+
                         //getting stuck here^
                         /*try {
                             Thread.sleep(2);
@@ -165,6 +170,12 @@ public class WeatherWorker extends Worker {
                 e.printStackTrace();
             }*/
             Log.e("APICall", "APICall Success");
+
+            Log.e("LocationGot", "ZipIn: "+Integer.toString(sharedPref.getInt("Zipcode", 95928)) );
+            Log.e("LocationGot", "Town: "+response.body().getLocation().getName() );
+            Log.e("LocationGot", "Sample Time: "+response.body().getCurrent().getLastUpdated() );
+            Log.e("LocationGot", "" );
+
             if (response.isSuccessful() && response.body() != null && response.body().getCurrent().getTempF() != null){
                 Data output = new Data.Builder().putDouble("temperature",response.body().getCurrent().getTempF()).build();
 
