@@ -63,21 +63,31 @@ public class MainViewModel extends ViewModel {
 
     String compare (double currTemp){//,String LastTime){
         List<Alarm> currList = ListOfAlarms.getValue();
+        int h=0;
 
-        for(Alarm alarm:currList) {
-            if(alarm.getHighOrLow() == 0) {//is hotter?
-                if(alarm.getTemperature() <= currTemp) {
+        for(int i=0;i<currList.size();i++){
+//        for(Alarm alarm:currList) {
+            if(currList.get(i).getHighOrLow() == 0){
+//            if(alarm.getHighOrLow() == 0) {//is hotter?
+                if(currList.get(i).getTemperature() <= currTemp){
+//                if(alarm.getTemperature() <= currTemp) {
                     //call alarm with: currTemp" has exceeded "alarm.getTemperature()
+                    //currList.get(i).setHighOrLow(1);
                     //alarm.setHighOrLow(1);
                     //swap those of HOL 0 below to 1
-                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";// "+LastTime;
+                    h=i;
+                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+currList.get(i).getTemperature()+"℉";// "+LastTime;
+//                    return "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";// "+LastTime;
                 }
             }else{
-                if(alarm.getTemperature() >= currTemp) {//is colder?
+                if(currList.get((currList.size()-(i-h))).getTemperature() >= currTemp){
+//                if(alarm.getTemperature() >= currTemp) {//is colder?
                     //call alarm with: currTemp" has fallen below "alarm.getTemperature()
+                    //currList.get((currList.size()-i)).setHighOrLow(0);
                     //alarm.setHighOrLow(0);
                     //swap those of HOL 1 above to 0
-                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
+                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+currList.get((currList.size()-(i-1))).getTemperature()+"℉";
+//                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
                 }
             }
         }

@@ -16,6 +16,6 @@ public interface ListDAO {
     @Delete
     void Delete(Alarm alarm);
 
-    @Query("SELECT * FROM Alarm ORDER BY temperature DESC")//returns list of Alarms sorted from high to low
+    @Query("SELECT * FROM Alarm ORDER BY high_or_low ASC,temperature DESC")//returns list of Alarms sorted from high to low
     LiveData<List<Alarm>> getAllAlarms();
 }
