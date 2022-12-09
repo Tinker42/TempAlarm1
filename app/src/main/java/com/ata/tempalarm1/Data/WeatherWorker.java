@@ -1,19 +1,29 @@
 package com.ata.tempalarm1.Data;
 
+import static android.content.Context.ALARM_SERVICE;
+
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.SystemClock;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 import androidx.work.Data;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.ata.tempalarm1.AlarmReceiver;
+import com.ata.tempalarm1.MainActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,6 +32,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,6 +49,8 @@ public class WeatherWorker extends Worker {
     }
 
     public native String getAPIKey();
+//    private MainDB Database;
+//    private LiveData<List<Alarm>> ListOfAlarms;
 
     public static MutableLiveData<WeatherInfo> outputObservable = new MutableLiveData();
 
@@ -50,6 +63,13 @@ public class WeatherWorker extends Worker {
     @Override
     public Result doWork() {
         GetDataService service = APIClient.getRetrofit().create(GetDataService.class);
+//        Database = Room.databaseBuilder(getApplicationContext(), MainDB.class, "userAlarms")
+//                .allowMainThreadQueries()
+//                .build();
+//        ListDAO listDAO = Database.listDAO();
+//        ListOfAlarms= listDAO.getAllAlarms();
+//        List<Alarm> currList = ListOfAlarms.getValue();
+//        Log.e("LocationGot", "List?: "+ListOfAlarms.getValue() );
 
         //getting the Retrofit instance and telling it to create a service that specifies what the call will be
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
@@ -178,6 +198,46 @@ public class WeatherWorker extends Worker {
 
             if (response.isSuccessful() && response.body() != null && response.body().getCurrent().getTempF() != null){
                 Data output = new Data.Builder().putDouble("temperature",response.body().getCurrent().getTempF()).build();
+
+                //trying
+//                double currTemp = response.body().getCurrent().getTempF();
+//                String alarmText = "";
+//                        //mainViewModel.compare(response.body().getCurrent().getTempF());//,weatherInfo.getCurrent().getLastUpdated());//runs compare of list vs current and returns notification string
+//
+//                for(Alarm alarm:currList) {
+//                    Log.e("LocationGot", "alarm.getTemperature(): "+alarm.getTemperature() );
+//                    if(alarm.getHighOrLow() == 0) {//is hotter?
+//                        if(alarm.getTemperature() <= currTemp) {
+//                            //call alarm with: currTemp" has exceeded "alarm.getTemperature()
+//                            //alarm.setHighOrLow(1);
+//                            //swap those of HOL 0 below to 1
+//                            alarmText = "The current Temperature of "+currTemp+"℉ has exceeded your monitored Temp of "+alarm.getTemperature()+"℉";// "+LastTime;
+//                        }
+//                    }else{
+//                        if(alarm.getTemperature() >= currTemp) {//is colder?
+//                            //call alarm with: currTemp" has fallen below "alarm.getTemperature()
+//                            //alarm.setHighOrLow(0);
+//                            //swap those of HOL 1 above to 0
+//                            alarmText = "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
+//                        }
+//                    }
+//                }
+//
+//                if(!alarmText.isEmpty()) {
+//                    AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(ALARM_SERVICE);//getting default alarm service
+//
+//                    Intent alarmReceiverIntent = new Intent(getApplicationContext(), AlarmReceiver.class);
+//                    alarmReceiverIntent.putExtra("alarmText", alarmText);
+//
+//                    PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(),
+//                            1
+//                            , alarmReceiverIntent
+//                            , PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+//                    );//breaking here//fixed
+//
+//                    alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), alarmIntent);
+//                }
+                //
 
                 outputObservable.postValue(response.body());
 
