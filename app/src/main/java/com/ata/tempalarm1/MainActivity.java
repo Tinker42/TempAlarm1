@@ -209,34 +209,34 @@ public class MainActivity extends AppCompatActivity {
                         mWorkManager.getWorkInfosByTagLiveData("MainActivity").removeObservers(MainActivity.this);
                         /*NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(this);*/
 
-//                        String alarmText = mainViewModel.compare(weatherInfo.getCurrent().getTempF());//,weatherInfo.getCurrent().getLastUpdated());//runs compare of list vs current and returns notification string
-//
-//                        if(!alarmText.isEmpty()){
-//                            AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
-//                            //if(alarmManager.canScheduleExactAlarms()){}
-//                            Intent alarmReceiverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
-//                            alarmReceiverIntent.putExtra("alarmText",alarmText);
-//                            //___________________________________________
-//
-//                            //___________________________________________
-//                            Log.e("pre1", workInfo.getState().toString());
-//                            PendingIntent alarmIntent= PendingIntent.getBroadcast(this,
-//                                    1
-//                                    //(int)System.currentTimeMillis()
-//                                    ,alarmReceiverIntent,
-//                                    //PendingIntent.FLAG_IMMUTABLE|
-//                                     PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE//missing mutability?
-//                                    );//breaking here//fixed
-//
-//
-//                            Log.e("post1", workInfo.getState().toString());
-//
-//                            Log.e("pre2", workInfo.getState().toString());
-//                            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),alarmIntent);
-//                            Log.e("post2", workInfo.getState().toString());
-//                            //
-//
-//                        }
+                        String alarmText = mainViewModel.compare(weatherInfo.getCurrent().getTempF());//,weatherInfo.getCurrent().getLastUpdated());//runs compare of list vs current and returns notification string
+
+                        if(!alarmText.isEmpty()){
+                            AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
+                            //if(alarmManager.canScheduleExactAlarms()){}
+                            Intent alarmReceiverIntent = new Intent(MainActivity.this,AlarmReceiver.class);
+                            alarmReceiverIntent.putExtra("alarmText",alarmText);
+                            //___________________________________________
+
+                            //___________________________________________
+                            Log.e("pre1", workInfo.getState().toString());
+                            PendingIntent alarmIntent= PendingIntent.getBroadcast(this,
+                                    1
+                                    //(int)System.currentTimeMillis()
+                                    ,alarmReceiverIntent,
+                                    //PendingIntent.FLAG_IMMUTABLE|
+                                     PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE//missing mutability?
+                                    );//breaking here//fixed
+
+
+                            Log.e("post1", workInfo.getState().toString());
+
+                            Log.e("pre2", workInfo.getState().toString());
+                            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),alarmIntent);
+                            Log.e("post2", workInfo.getState().toString());
+                            //
+
+                        }
 
                     });
                     break;
