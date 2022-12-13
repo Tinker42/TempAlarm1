@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.work.Data;
 import androidx.work.Worker;
@@ -24,6 +25,10 @@ import androidx.work.WorkerParameters;
 
 import com.ata.tempalarm1.AlarmReceiver;
 import com.ata.tempalarm1.MainActivity;
+import com.ata.tempalarm1.Data.Alarm;
+import com.ata.tempalarm1.Data.GetDataService;
+import com.ata.tempalarm1.Data.ListDAO;
+import com.ata.tempalarm1.Data.MainDB;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -67,9 +72,13 @@ public class WeatherWorker extends Worker {
 //                .allowMainThreadQueries()
 //                .build();
 //        ListDAO listDAO = Database.listDAO();
+//        ///data/data/com.ata.tempalarm1/databases
+//        //ListOfAlarms= getApplicationContext().getDatabasePath();
 //        ListOfAlarms= listDAO.getAllAlarms();
 //        List<Alarm> currList = ListOfAlarms.getValue();
-//        Log.e("LocationGot", "List?: "+ListOfAlarms.getValue() );
+//        Log.e("LocationGot", "listDAO?: "+listDAO );
+//        Log.e("LocationGot", "ListOfAlarms?: "+ListOfAlarms );
+//        Log.e("LocationGot", "currList?: "+currList );
 
         //getting the Retrofit instance and telling it to create a service that specifies what the call will be
         FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());

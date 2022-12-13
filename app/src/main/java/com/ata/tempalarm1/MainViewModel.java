@@ -86,7 +86,7 @@ public class MainViewModel extends ViewModel {
                     //currList.get((currList.size()-i)).setHighOrLow(0);
                     //alarm.setHighOrLow(0);
                     //swap those of HOL 1 above to 0
-                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+currList.get((currList.size()-(i-1))).getTemperature()+"℉";
+                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+currList.get((currList.size()-(i-h))).getTemperature()+"℉";
 //                    return "The current Temperature of "+currTemp+"℉ has fallen below your monitored Temp of "+alarm.getTemperature()+"℉";
                 }
             }

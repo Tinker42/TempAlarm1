@@ -185,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
                 //startService(intent);
             }
         });
+
+        Log.e("pre1", mainViewModel.getListOfAlarms().toString());
         Constraints constraint = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();//set a constraint to be sure the device is connected to a network
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(WeatherWorker.class,
                 15/* technically tied to specific phone's power management service 10/15 min, variable later*/, TimeUnit.MINUTES).addTag("MainActivity")
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
                         String alarmText = mainViewModel.compare(weatherInfo.getCurrent().getTempF());//,weatherInfo.getCurrent().getLastUpdated());//runs compare of list vs current and returns notification string
 
+                        //tryout
                         if(!alarmText.isEmpty()){
                             AlarmManager alarmManager= (AlarmManager) getSystemService(ALARM_SERVICE);//getting default alarm service
                             //if(alarmManager.canScheduleExactAlarms()){}
@@ -236,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("post2", workInfo.getState().toString());
                             //
 
-                        }
+                        }//to here
 
                     });
                     break;
